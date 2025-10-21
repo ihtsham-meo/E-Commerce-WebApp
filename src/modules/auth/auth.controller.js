@@ -233,4 +233,21 @@ if(!user){
 
 }
 
-user.userPassword = userpa
+user.userPassword = userPassword
+    user.userPasswordResetToken = null
+    user.userPasswordExpirationDate = null
+    await user.save()
+
+
+    return res
+        .status(201)
+        .json(
+            new ApiResponse(
+                201,
+                {},
+                "Password reset successfully"
+            )
+        );
+
+
+export { registerUser, logInUser, logoutUser, verifyUserMail, getAccessToken, forgotPasswordMail, resetPassword }
