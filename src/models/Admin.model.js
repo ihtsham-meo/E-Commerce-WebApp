@@ -117,3 +117,7 @@ adminSchema.methods.generateTemporaryToken = function () {
     
     return { unHashedToken, hashedToken, tokenExpiry };
 };
+
+const adminUser = mongoose.model("adminUser", adminUserSchema);
+
+export default adminUser;
