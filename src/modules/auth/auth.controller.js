@@ -249,5 +249,4 @@ user.userPassword = userPassword
             )
         );
 
-
 export { registerUser, logInUser, logoutUser, verifyUserMail, getAccessToken, forgotPasswordMail, resetPassword }

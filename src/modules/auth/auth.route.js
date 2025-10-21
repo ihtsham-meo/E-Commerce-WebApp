@@ -4,7 +4,7 @@ import { loginSchema, registerSchema, resetPasswordSchema } from "../../shared/v
 import { forgotPasswordMail, getAccessToken, logInUser, logoutUser, registerUser, resetPassword, verifyUserMail } from "./auth.controller.js"
 import { isLoggedIn } from "../../core/middleware/isLoggedIn.js"
 
-const authRouter = Router()
+const authRouter = Router();
 
 authRouter.post("/register-user", validate(registerSchema), registerUser)
 authRouter.post("/login-user", validate(loginSchema), logInUser)
