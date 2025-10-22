@@ -42,4 +42,44 @@ const userForgotPasswordMailBody = (name, url) => {
     return mailGenerator.generate(email);
 }
 
-export { userVerificationMailBody, userForgotPasswordMailBody };
+
+const adminVerificationMailBody = (name,url) => {
+    const email = {
+        body: {
+            name: name,
+            intro: "Welcome to E-Commerce Admin Panel! We'er excites to have you on board.",
+            action: {
+                instructions: "TO activate your admin account, Please clcik the button below: ",
+                button: {
+                    color: "#22BC66",
+                    text: "Verify your Account",
+                    link: url,
+                },
+            },
+            ontro: "If you did not request this, please ignore this email or contact support.",
+        },
+    };
+    return mailGenerator.generate(email)
+}
+
+const adminForgotPasswordMailBody = (name, url) => {
+    const email = {
+        body: {
+            name: name,
+            intro: "You have requested to reset your password for the Admin Panel. Click the button below to reset your password.",
+            action: {
+                instructions: "To reset your password, click here:",
+                button: {
+                    color: "#22BC66",
+                    text: "Reset Password",
+                    link: url,
+                },
+            },
+            outro: "If you did not request a password reset, please ignore this email or contact support.",
+        },
+    };
+
+    return mailGenerator.generate(email);
+};
+
+export { userVerificationMailBody, userForgotPasswordMailBody, adminVerificationMailBody, adminForgotPasswordMailBody };
