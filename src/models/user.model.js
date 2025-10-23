@@ -12,7 +12,6 @@ const userSchema = new mongoose.Schema(
     userName: {
       type: String,
       required: true,
-      unique: true,
       trim: true,
       maxlength: 50,
     },
@@ -22,15 +21,16 @@ const userSchema = new mongoose.Schema(
       unique: true,
       trim: true,
       lowercase: true,
-      maxlength: 100,
     },
     userPassword: {
       type: String,
       required: true,
-      minlength: 6,
+      minlength: 8,
     },
     userAddress: {
       type: String,
+      default: null,
+      trim: true,
       maxlength: 200,
     },
     userIsVerified: {
@@ -55,11 +55,12 @@ const userSchema = new mongoose.Schema(
     },
     userRole: {
       type: String,
-      enum: ["buyer", "store-admin", "factory-admin", "admin"],
+      enum: ["buyer", "store-admin", "factory-admin"],
       default: "buyer",
     },
     phoneNumber: {
       type: String,
+      default: null,
       maxlength: 20,
     },
     isActive: {
@@ -120,4 +121,5 @@ userSchema.methods.generateTemporaryToken = function () {
 };
 
 const User = mongoose.model("User", userSchema);
+
 export default User;
