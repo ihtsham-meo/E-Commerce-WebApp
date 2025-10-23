@@ -1,11 +1,11 @@
 import mongoose from "mongoose";
-import { jwt } from "zod";
-import { lowercase, required } from "zod/mini";
-import { defaultErrorMap } from "zod/v3";
+import bcrypt from "bcryptjs";
+import crypto from "crypto";
+import jwt from "jsonwebtoken";
 
-const adminSchema = new mongoose.Schema(
+const adminUserSchema = new mongoose.Schema(
     {
-        profileImage: {
+        adminprofileImage: {
             type: String,
             default: 'https://placehold.co/600x400?text=admin+Image',
         },
@@ -46,6 +46,17 @@ const adminSchema = new mongoose.Schema(
             default: null,
         },
 
+        adminVerificationToken: {
+            type: Date,
+            default: null,
+        },
+
+        adminVerificationTokenExpiry: {
+            type: String,
+            default: null,
+        },
+
+
         refreshToken: {
             type: String,
             default: null,
@@ -53,6 +64,7 @@ const adminSchema = new mongoose.Schema(
 
         adminRole: {
             type: String,
+            enum: ["super-admin", "admin-analyst", "admin-factory", "admin-store", "admin-buyer"],
             default: null,
         },
 
