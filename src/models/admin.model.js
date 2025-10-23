@@ -5,10 +5,10 @@ import crypto from "crypto";
 
 const userSchema = new mongoose.Schema(
   {
-    // profileImage: {
-    //   type: String,
-    //   default: "https://placehold.co/600x400?text=User\nName",
-    // },
+    profileImage: {
+      type: String,
+      default: "https://placehold.co/600x400?text=User\nName",
+    },
     adminName: {
       type: String,
       required: true,
