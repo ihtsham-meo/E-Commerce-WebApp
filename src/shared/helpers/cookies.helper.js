@@ -1,4 +1,4 @@
-import { asyncHandler } from "../../core/utils/async-handler";
+import { asyncHandler } from "../../core/utils/async-handler.js";
 
 const storeLoginCookies = (res, accessToken, refreshToken, role) => {
     console.log(role);

@@ -15,7 +15,7 @@ const registerUser = asyncHandler(async (req, res) => {
         throw new ApiError(400, "User already exists");
     }
 
-    // ✅ Handle profile image upload (if provided)
+    // Handle profile image upload (if provided)
     let profileImageKey = null;
     if (req.file) {
         try {
@@ -34,7 +34,7 @@ const registerUser = asyncHandler(async (req, res) => {
         userRole,
         phoneNumber,
         userAddress,
-        ...(profileImageKey && { profileImage: profileImageKey }) // ✅ store S3 key if available
+        ...(profileImageKey && { profileImage: profileImageKey }) // store S3 key if available
     });
 
     if (!user) {

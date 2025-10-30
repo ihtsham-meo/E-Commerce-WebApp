@@ -1,5 +1,5 @@
 import Router from "express";
-import multer from "multer"; // 🧩 Added for handling file uploads
+import { upload } from "../../core/middleware/multer.js";
 import { validate } from "../../core/middleware/validate.js";
 import {
   loginSchema,
@@ -19,37 +19,34 @@ import { isLoggedIn } from "../../core/middleware/isLoggedIn.js";
 
 const authRouter = Router();
 
-// 🧱 Use Multer to handle image uploads in memory for AWS S3
-const upload = multer({ storage: multer.memoryStorage() });
-
-// ✅ Register User (with optional profile image upload to AWS S3)
+// Register User (with optional profile image upload to AWS S3)
 authRouter.post(
   "/register-user",
-  // ⬅️ handles image upload for AWS
+  // handles image upload for AWS
   upload.single("profileImage"),
   validate(registerSchema),
    
   registerUser
 );
 
-// 🔐 Login User
+//Login User
 authRouter.post("/login-user", validate(loginSchema), logInUser);
 
-// 🚪 Logout User
+//Logout User
 authRouter.post("/logout-user", isLoggedIn, logoutUser);
 
-// ✉️ Verify Email
+//Verify Email
 authRouter.get("/verify/:token", verifyUserMail);
 
-// 🔁 Get Access Token
+//Get Access Token
 authRouter.get("/get-access-token", getAccessToken);
 
-// 🔑 Forgot Password
+//Forgot Password
 authRouter.get("/forgot-password-mail", forgotPasswordMail);
 
 
 
-// 🔒 Reset Password
+//Reset Password
 authRouter.post(
   "/reset-password/:token",
   validate(resetPasswordSchema),

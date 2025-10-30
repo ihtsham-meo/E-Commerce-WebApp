@@ -1,4 +1,4 @@
-import { ApiError } from "../utils/api-error";
+import { ApiError } from "../utils/api-error.js"
 
 export const errorHandler = (err, req, res, next) => {
   console.error("🔥 Error caught by middleware:", err);
