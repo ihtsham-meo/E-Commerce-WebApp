@@ -2,133 +2,125 @@ import mongoose from "mongoose";
 import bcrypt from "bcryptjs";
 import crypto from "crypto";
 import jwt from "jsonwebtoken";
-
 const adminUserSchema = new mongoose.Schema(
     {
-        adminprofileImage: {
+        adminProfileImage: {
             type: String,
-            default: 'https://placehold.co/600x400?text=admin+Image',
+            default: 'https://placehold.co/600x400?text=User+Image',
         },
-        
         adminName: {
             type: String,
             required: true,
             trim: true,
         },
-
         adminEmail: {
             type: String,
             required: true,
             unique: true,
-            lowercase: true,
             trim: true,
+            lowercase: true,
             index: true,
         },
-
         adminPassword: {
             type: String,
             required: true,
         },
-
         adminAddress: {
             type: String,
-            trim: true,
             default: null,
+            trim: true,
         },
-
+        adminIsVerified: {
+            type: Boolean,
+            default: false,
+        },
         adminPasswordResetToken: {
             type: String,
             default: null,
         },
-
         adminPasswordExpirationDate: {
-            tpye: Date,
-            default: null,
-        },
-
-        adminVerificationToken: {
             type: Date,
             default: null,
         },
-
-        adminVerificationTokenExpiry: {
+        adminVerificationToken: {
             type: String,
             default: null,
         },
-
-
+        adminVerificationTokenExpiry: {
+            type: Date,
+            default: null
+        },
         refreshToken: {
             type: String,
             default: null,
         },
-
         adminRole: {
             type: String,
             enum: ["super-admin", "admin-analyst", "admin-factory", "admin-store", "admin-buyer"],
-            default: null,
+            default: "super-admin",
         },
-
         phoneNumber: {
             type: String,
             default: null,
         },
-
         isActive: {
             type: Boolean,
             default: true,
         },
-
     },
     {
-        timestamps: true,
+        timestamps: true, // adds createdAt and updatedAt automatically
     }
 );
 
-adminSchema.pre("save",function(next){
-    if(this.isModified("adminPassword")) {
+adminUserSchema.pre("save", function (next) {
+    if (this.isModified("adminPassword")) {
         this.adminPassword = bcrypt.hashSync(this.adminPassword, 10)
     }
     next()
 })
 
-adminSchema.method.isPasswordCorrect = async function (password){
+adminUserSchema.methods.isPasswordCorrect = async function (password) {
     return await bcrypt.compare(password, this.adminPassword);
 };
 
-adminSchema.methods.generateAccessToken = function (){
+
+adminUserSchema.methods.generateAccessToken = function () {
     return jwt.sign(
         {
             _id: this._id,
             adminEmail: this.adminEmail,
             adminName: this.adminName,
-            adminRole: this.adminRole,
+            adminRole: this.adminRole
         },
         process.env.ACCESS_TOKEN_SECRET,
-        {expireIn: process.env.ACCESS_TOKEN_EXPIRY},
+        { expiresIn: process.env.ACCESS_TOKEN_EXPIRY },
     );
 };
 
-adminSchema.methods.generateRefreshToken = function() {
+adminUserSchema.methods.generateRefreshToken = function () {
     return jwt.sign(
         {
             _id: this._id,
         },
         process.env.REFRESH_TOKEN_SECRET,
-        { expireIn: process.env.REFRESH_TOKEN_EXPIRY },
+        { expiresIn: process.env.REFRESH_TOKEN_EXPIRY },
     );
 };
 
-adminSchema.methods.generateTemporaryToken = function () {
+adminUserSchema.methods.generateTemporaryToken = function () {
+
     const unHashedToken = crypto.randomBytes(20).toString("hex");
 
-    const hashToken = crypto 
+    const hashedToken = crypto
         .createHash("sha256")
         .update(unHashedToken)
         .digest("hex");
-    const tokenExpiry = Date.now() + 5 * 60 * 1000;
-    
+    const tokenExpiry = Date.now() + 30 * 60 * 1000; // 20 minutes;
+
     return { unHashedToken, hashedToken, tokenExpiry };
 };
+
 
 const adminUser = mongoose.model("adminUser", adminUserSchema);
 
