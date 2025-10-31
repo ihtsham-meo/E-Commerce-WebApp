@@ -1,19 +1,29 @@
 import mongoose from "mongoose";
 
-const factoryProductCategorySchema = new mongoose.Schema(
+const factoryProductFeedbackSchema = new mongoose.Schema(
   {
+    factoryProductId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "FactoryProduct",
+      required: true,
+    },
+    storeId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Store",
+      required: true,
+    },
     factoryId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Factory",
       required: true,
     },
-    factoryProductCategoryName: {
+    description: {
       type: String,
       required: true,
       trim: true,
-      maxlength: 100,
+      maxlength: 500,
     },
-    factoryProductCategoryLogo: {
+    factoryProductImage: {
       type: String,
       default: null,
     },
@@ -21,7 +31,9 @@ const factoryProductCategorySchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-export const FactoryProductCategory = mongoose.model(
-  "FactoryProductCategory",
-  factoryProductCategorySchema
+const FactoryProductFeedback = mongoose.model(
+  "FactoryProductFeedback",
+  factoryProductFeedbackSchema
 );
+
+export default FactoryProductFeedback;
