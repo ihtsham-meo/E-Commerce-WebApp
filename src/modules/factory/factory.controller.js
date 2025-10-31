@@ -7,7 +7,7 @@ import S3UploadHelper from "../../shared/helpers/s3Upload.js";
 import FactoryProduct from "../../models/factory/FactoryProduct.model.js";
 import { FactoryProductCategory } from "../../models/factory/FactoryProductCategory.model.js";
 import { FactoryProductReview } from "../../models/factory/FactoryProductReview.model.js";
-import { FactoryProductFeedback } from "../../models/factory/FactoryProductFeedback.model.js";
+import FactoryProductFeedback from "../../models/factory/FactoryProductFeedback.model.js";
 import { FactoryFeedback } from "../../models/factory/FactoryFeedback.model.js";
 import { FactoryOrder } from "../../models/factory/FactoryOrder.model.js";
 import { FactoryTransaction } from "../../models/factory/FactoryTransaction.model.js";

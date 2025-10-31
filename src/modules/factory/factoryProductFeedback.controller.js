@@ -3,7 +3,7 @@ import { ApiError } from "../../core/utils/api-error.js";
 import { ApiResponse } from "../../core/utils/api-response.js";
 import Factory from "../../models/factory/Factory.model.js";
 import FactoryProduct from "../../models/factory/FactoryProduct.model.js";
-import { FactoryProductFeedback } from "../../models/factory/FactoryProductFeedback.model.js";
+import FactoryProductFeedback from "../../models/factory/FactoryProductFeedback.model.js";
 import Store from "../../models/store/Store.model.js";
 import S3UploadHelper from "../../shared/helpers/s3Upload.js";
 import { factoryProductFeedbackValidation } from "../../shared/validators/factory.validation.js";

@@ -9,7 +9,7 @@ import { errorHandler } from "./src/core/middleware/errorHandler.js";
 // Routers
 import authRouter from "./src/modules/auth/auth.route.js";
 import userRouter from "./src/modules/user/user.route.js";
-import adminRouter from "./src/modules/admin/admin.route.js";
+import adminRouter from "./src/modules/admin/admin.routes.js";
 import adminActionRouter from "./src/modules/admin/adminAction.route.js";
 import categoryRouter from "./src/modules/category/category.route.js";
 
@@ -20,7 +20,7 @@ import storeProductCategoryRouter from "./src/modules/store/storeProductCategory
 import storeProductReviewRouter from "./src/modules/store/storeProductReview.route.js";
 import storeFeedbackRouter from "./src/modules/store/storeFeedback.route.js";
 import storeProductFeedbackRouter from "./src/modules/store/storeProductFeedback.route.js";
-import storeTransactionRouter from "./src/modules/store/storeTransaction.route.js";
+import storeTransactionRouter from "./src/modules/store/storeTransacton.route.js";
 import storeOrderRouter from "./src/modules/store/storeOrder.route.js";
 
 // Factory Router
