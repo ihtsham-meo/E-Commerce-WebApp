@@ -2,9 +2,7 @@ import { FactoryProductCategory } from "../../models/factory/FactoryProductCateg
 import Factory from "../../models/factory/Factory.model.js";
 import S3UploadHelper from "../../shared/helpers/s3Upload.js";
 
-/* =============================
-   ✅ CREATE FACTORY CATEGORY
-============================= */
+// CREATE FACTORY CATEGORY
 export const createFactoryProductCategory = async (req, res) => {
   try {
     const userId = req.user._id;
@@ -31,9 +29,7 @@ export const createFactoryProductCategory = async (req, res) => {
   }
 };
 
-/* =============================
-   ✅ GET ALL FACTORY CATEGORIES
-============================= */
+// GET ALL FACTORY CATEGORIES
 export const getAllFactoryProductCategories = async (req, res) => {
   try {
     const userId = req.user._id;
@@ -47,9 +43,7 @@ export const getAllFactoryProductCategories = async (req, res) => {
   }
 };
 
-/* =============================
-   ✅ GET SINGLE FACTORY CATEGORY
-============================= */
+//GET SINGLE FACTORY CATEGORY
 export const getFactoryProductCategoryById = async (req, res) => {
   try {
     const userId = req.user._id;
@@ -67,9 +61,7 @@ export const getFactoryProductCategoryById = async (req, res) => {
   }
 };
 
-/* =============================
-   ✅ UPDATE FACTORY CATEGORY
-============================= */
+//  UPDATE FACTORY CATEGORY
 export const updateFactoryProductCategory = async (req, res) => {
   try {
     const userId = req.user._id;
@@ -97,9 +89,7 @@ export const updateFactoryProductCategory = async (req, res) => {
   }
 };
 
-/* =============================
-   ✅ DELETE FACTORY CATEGORY
-============================= */
+// DELETE FACTORY CATEGORY
 export const deleteFactoryProductCategory = async (req, res) => {
   try {
     const userId = req.user._id;

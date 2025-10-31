@@ -23,7 +23,7 @@ export const createFactory = asyncHandler(async (req, res) => {
   const existingFactory = await Factory.findOne({ userID: userId });
   if (existingFactory) throw new ApiError(400, "User already owns a factory");
 
-  // 🖼️ Upload images if provided
+  // Upload images if provided
   let logoKey = null;
   let coverKey = null;
   let licenseImageKey = null;
@@ -89,7 +89,7 @@ export const updateFactory = asyncHandler(async (req, res) => {
   const factory = await Factory.findOne({ userID: userId });
   if (!factory) throw new ApiError(404, "Factory not found");
 
-  // 🖼️ Update images if new files are uploaded
+  // Update images if new files are uploaded
   if (req.files?.factoryLogo?.[0]) {
     if (factory.factoryLogo) await S3UploadHelper.deleteFile(factory.factoryLogo).catch(() => {});
     const upload = await S3UploadHelper.uploadFile(req.files.factoryLogo[0], "factory-logos");
@@ -127,11 +127,11 @@ export const updateFactory = asyncHandler(async (req, res) => {
 export const deleteFactory = asyncHandler(async (req, res) => {
   const userId = req.user._id;
 
-  // 1️⃣ Find factory owned by this user
+  // Find factory owned by this user
   const factory = await Factory.findOne({ userID: userId });
   if (!factory) throw new ApiError(404, "Factory not found");
 
-  // 2️⃣ Delete associated images from S3 (if any)
+  // Delete associated images from S3 (if any)
   const imageFields = [
     factory.factoryLogo,
     factory.factoryCoverImage,
@@ -144,7 +144,7 @@ export const deleteFactory = asyncHandler(async (req, res) => {
     }
   }
 
-  // 3️⃣ Delete all associated records
+  //Delete all associated records
 
   // Products
   const products = await FactoryProduct.find({ factoryId: factory._id });
@@ -177,10 +177,10 @@ export const deleteFactory = asyncHandler(async (req, res) => {
   // Transactions
   await FactoryTransaction.deleteMany({ factoryId: factory._id.toString() });
 
-  // 4️⃣ Finally, delete the factory itself
+  // Finally, delete the factory itself
   await Factory.deleteOne({ _id: factory._id });
 
-  // 5️⃣ Send success response
+  // Send success response
   return res
     .status(200)
     .json(new ApiResponse(200, null, "Factory and all related data deleted successfully"));

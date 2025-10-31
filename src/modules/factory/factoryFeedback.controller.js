@@ -6,31 +6,31 @@ import Store from "../../models/store/Store.model.js";
 import { factoryFeedbackValidation } from "../../shared/validators/factory.validation.js";
 import  Factory  from "../../models/factory/Factory.model.js";
 
-// 🟢 CREATE Feedback (store-admin only)
+// CREATE Feedback (store-admin only)
 export const createFactoryFeedback = asyncHandler(async (req, res) => {
   const userId = req.user._id;
 
-  // ✅ Only store-admin can create feedback
+  //Only store-admin can create feedback
   if (req.user.userRole !== "store-admin") {
     throw new ApiError(403, "Only store-admins can give factory feedback.");
   }
 
-  // ✅ Find store linked to this store-admin
+  // Find store linked to this store-admin
   const store = await Store.findOne({ userID: userId });
   if (!store) {
     throw new ApiError(404, "Store not found for this store-admin user.");
   }
 
-  // ✅ Validate incoming data
+  // Validate incoming data
   const data = factoryFeedbackValidation.parse(req.body);
 
-  // ✅ Check if the factory exists
+  // Check if the factory exists
   const factory = await Factory.findById(data.factoryId);
   if (!factory) {
     throw new ApiError(404, "Factory not found. Invalid factoryId provided.");
   }
 
-  // ✅ Create feedback
+  // Create feedback
   const feedback = await FactoryFeedback.create({
     factoryFeedback: data.factoryFeedback,
     factoryId: factory._id,
@@ -44,7 +44,7 @@ export const createFactoryFeedback = asyncHandler(async (req, res) => {
 });
 
 
-// 🟢 GET ALL Feedbacks (populate store & factory)
+// GET ALL Feedbacks (populate store & factory)
 export const getAllFactoryFeedbacks = asyncHandler(async (req, res) => {
   const feedbacks = await FactoryFeedback.find()
     .populate("userId", "userName userEmail")
@@ -57,7 +57,7 @@ export const getAllFactoryFeedbacks = asyncHandler(async (req, res) => {
 });
 
 
-// 🟢 GET SINGLE Feedback
+// GET SINGLE Feedback
 export const getFactoryFeedbackById = asyncHandler(async (req, res) => {
   const feedback = await FactoryFeedback.findById(req.params.id)
     .populate("userId", "userName userEmail")
@@ -72,7 +72,7 @@ export const getFactoryFeedbackById = asyncHandler(async (req, res) => {
 });
 
 
-// 🟢 UPDATE Feedback (only owner)
+// UPDATE Feedback (only owner)
 export const updateFactoryFeedback = asyncHandler(async (req, res) => {
   const feedback = await FactoryFeedback.findById(req.params.id);
   if (!feedback) throw new ApiError(404, "Feedback not found");
@@ -95,7 +95,7 @@ export const updateFactoryFeedback = asyncHandler(async (req, res) => {
 });
 
 
-// 🟢 DELETE Feedback (only owner)
+// DELETE Feedback (only owner)
 export const deleteFactoryFeedback = asyncHandler(async (req, res) => {
   const feedback = await FactoryFeedback.findById(req.params.id);
   if (!feedback) throw new ApiError(404, "Feedback not found");

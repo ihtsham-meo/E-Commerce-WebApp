@@ -5,7 +5,7 @@ import { FactoryProductReview } from "../../models/factory/FactoryProductReview.
 import { FactoryProduct } from "../../models/factory/FactoryProduct.model.js";
 import  Store  from "../../models/store/Store.model.js";
 
-// ---------- CREATE REVIEW ----------
+// CREATE REVIEW
 export const createFactoryProductReview = asyncHandler(async (req, res) => {
   const { factoryProductId, factoryProductRating } = req.body;
 
@@ -34,7 +34,7 @@ export const createFactoryProductReview = asyncHandler(async (req, res) => {
   return res.status(201).json(new ApiResponse(201, review, "Review created successfully"));
 });
 
-// ---------- GET ALL REVIEWS ----------
+// GET ALL REVIEWS 
 export const getAllFactoryProductReviews = asyncHandler(async (req, res) => {
   const reviews = await FactoryProductReview.find()
     .populate("factoryProductId", "factoryProductName")
@@ -44,7 +44,7 @@ export const getAllFactoryProductReviews = asyncHandler(async (req, res) => {
   return res.status(200).json(new ApiResponse(200, reviews, "All reviews fetched successfully"));
 });
 
-// ---------- GET REVIEW BY ID ----------
+// GET REVIEW BY ID
 export const getFactoryProductReviewById = asyncHandler(async (req, res) => {
   const { id } = req.params;
 
@@ -58,7 +58,7 @@ export const getFactoryProductReviewById = asyncHandler(async (req, res) => {
   return res.status(200).json(new ApiResponse(200, review, "Review fetched successfully"));
 });
 
-// ---------- UPDATE REVIEW ----------
+//UPDATE REVIEW
 export const updateFactoryProductReview = asyncHandler(async (req, res) => {
   const { id } = req.params;
   const { factoryProductRating } = req.body;
@@ -76,7 +76,7 @@ export const updateFactoryProductReview = asyncHandler(async (req, res) => {
   return res.status(200).json(new ApiResponse(200, review, "Review updated successfully"));
 });
 
-// ---------- DELETE REVIEW ----------
+// DELETE REVIEW
 export const deleteFactoryProductReview = asyncHandler(async (req, res) => {
   const { id } = req.params;
   const userId = req.user._id;

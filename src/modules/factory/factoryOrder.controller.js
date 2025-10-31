@@ -8,20 +8,20 @@ import S3UploadHelper from "../../shared/helpers/s3Upload.js";
 import Store from "../../models/store/Store.model.js";
 import crypto from "crypto";
 
-// ✅ CREATE ORDER (storeId extracted from user)
+// CREATE ORDER (storeId extracted from user)
 export const createFactoryOrder = asyncHandler(async (req, res) => {
-  // ✅ Validate request body
+  // Validate request body
   const data = factoryOrderValidation.parse(req.body);
   const { shippingAddress, products } = data;
 
-  // ✅ Get store for logged-in user
+  // Get store for logged-in user
   const store = await Store.findOne({ userID: req.user._id });
   if (!store) throw new ApiError(404, "Store not found for this user");
   const storeId = store._id.toString();
 
   const orderProducts = [];
 
-  // ✅ Loop through products (can be from different factories)
+  // Loop through products (can be from different factories)
   for (const p of products) {
     const product = await FactoryProduct.findById(p.factoryProductId);
     if (!product)
@@ -36,16 +36,16 @@ export const createFactoryOrder = asyncHandler(async (req, res) => {
     });
   }
 
-  // ✅ Calculate total order amount
+  // Calculate total order amount
   const totalAmount = orderProducts.reduce(
     (sum, p) => sum + p.price * p.quantity,
     0
   );
 
-  // ✅ Generate unique order ID
+  // Generate unique order ID
   const orderId = `FO-${crypto.randomBytes(4).toString("hex").toUpperCase()}`;
 
-  // ✅ Create FactoryOrder
+  // Create FactoryOrder
   const order = await FactoryOrder.create({
     storeId,
     products: orderProducts,
@@ -54,7 +54,7 @@ export const createFactoryOrder = asyncHandler(async (req, res) => {
     orderId,
   });
 
-  // ✅ Convert product images to signed URLs
+  // Convert product images to signed URLs
   const orderObj = order.toObject();
   for (const p of orderObj.products) {
     if (p.productImage)
@@ -67,7 +67,7 @@ export const createFactoryOrder = asyncHandler(async (req, res) => {
 });
 
 
-// ✅ GET ALL ORDERS
+// GET ALL ORDERS
 export const getAllFactoryOrders = asyncHandler(async (req, res) => {
   const orders = await FactoryOrder.find();
 
@@ -86,7 +86,7 @@ export const getAllFactoryOrders = asyncHandler(async (req, res) => {
     .json(new ApiResponse(200, ordersWithUrls, "All factory orders fetched successfully"));
 });
 
-// ✅ GET SINGLE ORDER
+// GET SINGLE ORDER
 export const getFactoryOrderById = asyncHandler(async (req, res) => {
   const order = await FactoryOrder.findById(req.params.id);
   if (!order) throw new ApiError(404, "Factory order not found");
@@ -101,7 +101,7 @@ export const getFactoryOrderById = asyncHandler(async (req, res) => {
     .json(new ApiResponse(200, orderObj, "Factory order fetched successfully"));
 });
 
-// ✅ DELETE ORDER
+// DELETE ORDER
 export const deleteFactoryOrder = asyncHandler(async (req, res) => {
   const deleted = await FactoryOrder.findByIdAndDelete(req.params.id);
   if (!deleted) throw new ApiError(404, "Factory order not found");

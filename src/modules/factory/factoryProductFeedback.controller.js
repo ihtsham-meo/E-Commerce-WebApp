@@ -8,23 +8,23 @@ import Store from "../../models/store/Store.model.js";
 import S3UploadHelper from "../../shared/helpers/s3Upload.js";
 import { factoryProductFeedbackValidation } from "../../shared/validators/factory.validation.js";
 
-// 🟢 CREATE Factory Product Feedback (only store-admin)
+// CREATE Factory Product Feedback (only store-admin)
 export const createFactoryProductFeedback = asyncHandler(async (req, res) => {
   const user = req.user;
 
-  // ✅ Only store-admin can give feedback
+  // Only store-admin can give feedback
   if (user.userRole !== "store-admin") {
     throw new ApiError(403, "Only store-admins can create product feedback");
   }
 
-  // ✅ Check store existence
+  // Check store existence
   const store = await Store.findOne({ userID: user._id });
   if (!store) throw new ApiError(404, "Store not found for this store-admin");
 
-  // ✅ Validate body
+  // Validate body
   const data = factoryProductFeedbackValidation.parse(req.body);
 
-  // ✅ Check factory and product validity
+  // Check factory and product validity
   const factory = await Factory.findById(data.factoryId);
   if (!factory) throw new ApiError(404, "Factory not found");
 
@@ -34,7 +34,7 @@ export const createFactoryProductFeedback = asyncHandler(async (req, res) => {
   });
   if (!product) throw new ApiError(404, "Product not found for this factory");
 
-  // 🖼️ Upload product feedback image (if provided)
+  // Upload product feedback image (if provided)
   let uploadedKey = null;
   if (req.file) {
     const upload = await S3UploadHelper.uploadFile(req.file, "factory-feedbacks");
@@ -60,7 +60,7 @@ export const createFactoryProductFeedback = asyncHandler(async (req, res) => {
     .json(new ApiResponse(201, feedbackObj, "Factory product feedback created successfully"));
 });
 
-// 🟢 GET ALL Factory Product Feedbacks
+// GET ALL Factory Product Feedbacks
 export const getAllFactoryProductFeedbacks = asyncHandler(async (req, res) => {
   const feedbacks = await FactoryProductFeedback.find()
     .populate("factoryProductId", "factoryProductName factoryProductImage")
@@ -103,7 +103,7 @@ export const getFactoryProductFeedbackById = asyncHandler(async (req, res) => {
     .json(new ApiResponse(200, obj, "Factory product feedback fetched successfully"));
 });
 
-// 🟢 UPDATE Factory Product Feedback (only store owner)
+// UPDATE Factory Product Feedback (only store owner)
 export const updateFactoryProductFeedback = asyncHandler(async (req, res) => {
   const feedback = await FactoryProductFeedback.findById(req.params.id);
   if (!feedback) throw new ApiError(404, "Feedback not found");
@@ -141,7 +141,7 @@ export const updateFactoryProductFeedback = asyncHandler(async (req, res) => {
     .json(new ApiResponse(200, obj, "Factory product feedback updated successfully"));
 });
 
-// 🟢 DELETE Factory Product Feedback (only store owner)
+// DELETE Factory Product Feedback (only store owner)
 export const deleteFactoryProductFeedback = asyncHandler(async (req, res) => {
   const feedback = await FactoryProductFeedback.findById(req.params.id);
   if (!feedback) throw new ApiError(404, "Feedback not found");

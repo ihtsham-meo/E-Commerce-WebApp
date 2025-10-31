@@ -17,10 +17,10 @@ export const createFactoryTransaction = asyncHandler(async (req, res) => {
   const order = await FactoryOrder.findById(orderId);
   if (!order) throw new ApiError(404, "Factory order not found");
 
-  // ✅ Check if order belongs to logged-in user
+  // Check if order belongs to logged-in user
   const store = await Store.findOne({ _id: order.storeId, userID: req.user._id });
 
-// ✅ Check if logged-in user owns the store of this order
+// Check if logged-in user owns the store of this order
 if (!store) {
   throw new ApiError(403, "You are not authorized to pay for this order");
 }

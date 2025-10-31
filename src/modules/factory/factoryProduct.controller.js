@@ -3,9 +3,7 @@ import FactoryProduct from "../../models/factory/FactoryProduct.model.js";
 import S3UploadHelper from "../../shared/helpers/s3Upload.js";
 import { asyncHandler } from "../../core/utils/async-handler.js";
 
-/* =============================
-   ✅ CREATE PRODUCT
-============================= */
+// CREATE PRODUCT
 export const createFactoryProduct = asyncHandler(async (req, res) => {
   const userId = req.user._id;
   const { factoryProductName, factoryProductDescription, factoryMinOrderUnits, factoryProductStatus,productCategoryId } = req.body;
@@ -35,9 +33,7 @@ export const createFactoryProduct = asyncHandler(async (req, res) => {
   res.status(201).json({ success: true, message: "Factory product created successfully", data: productObj });
 });
 
-/* =============================
-   ✅ GET ALL PRODUCTS
-============================= */
+// GET ALL PRODUCTS
 export const getAllFactoryProducts = asyncHandler(async (req, res) => {
   const userId = req.user._id;
   const factory = await Factory.findOne({ userID: userId });
@@ -56,9 +52,7 @@ export const getAllFactoryProducts = asyncHandler(async (req, res) => {
   res.status(200).json({ success: true, count: products.length, data: productsWithUrls });
 });
 
-/* =============================
-   ✅ GET SINGLE PRODUCT
-============================= */
+//GET SINGLE PRODUCT
 export const getFactoryProductById = asyncHandler(async (req, res) => {
   const userId = req.user._id;
   const { id } = req.params;
@@ -75,9 +69,7 @@ export const getFactoryProductById = asyncHandler(async (req, res) => {
   res.status(200).json({ success: true, data: productObj });
 });
 
-/* =============================
-   ✅ UPDATE PRODUCT
-============================= */
+// UPDATE PRODUCT
 export const updateFactoryProduct = asyncHandler(async (req, res) => {
   const userId = req.user._id;
   const { id } = req.params;
@@ -107,9 +99,8 @@ export const updateFactoryProduct = asyncHandler(async (req, res) => {
   res.status(200).json({ success: true, message: "Factory product updated successfully", data: productObj });
 });
 
-/* =============================
-   ✅ DELETE PRODUCT
-============================= */
+
+// DELETE PRODUCT
 export const deleteFactoryProduct = asyncHandler(async (req, res) => {
   const userId = req.user._id;
   const { id } = req.params;
