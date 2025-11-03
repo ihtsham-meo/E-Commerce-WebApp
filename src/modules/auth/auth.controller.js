@@ -1,5 +1,5 @@
 import { asyncHandler } from "../../core/utils/async-handler.js";
-import User from "../../models/User.model.js";
+import User from "../../models/user.model.js";
 import { ApiError } from "../../core/utils/api-error.js";
 import { ApiResponse } from "../../core/utils/api-response.js";
 import { userForgotPasswordMailBody, userVerificationMailBody } from "../../shared/constants/mail.constant.js";

@@ -1,7 +1,7 @@
 import { ApiError } from "../../core/utils/api-error.js";
 import { ApiResponse } from "../../core/utils/api-response.js";
 import { asyncHandler } from "../../core/utils/async-handler.js";
-import User from "../../models/User.model.js";
+import User from "../../models/user.model.js";
 const getAllUsers = asyncHandler(async (req, res) => {
 
     const users = await User.find()

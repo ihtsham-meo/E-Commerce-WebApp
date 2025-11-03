@@ -1,5 +1,5 @@
 import Store from "../../models/store/Store.model.js";
-import User from "../../models/User.model.js";
+import User from "../../models/user.model.js";
 import { StoreFeedBack } from "../../models/store/StoreFeedback.model.js";
 import { StoreOrders } from "../../models/store/StoreOrder.model.js";
 import StoreProduct from "../../models/store/StoreProduct.model.js";
