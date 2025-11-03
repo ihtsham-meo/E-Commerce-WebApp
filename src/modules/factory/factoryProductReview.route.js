@@ -1,5 +1,5 @@
 import express from "express";
-import { isLoggedIn } from "../../core/middleware/isLoggedin.js";
+import { isLoggedIn } from "../../core/middleware/isLoggedIn.js";
 import { authorizeRoles } from "../../core/middleware/authorizeRoles.js";
 import { validate } from "../../core/middleware/validate.js";
 import {
