@@ -9,7 +9,7 @@ import crypto from "crypto";
 import S3UploadHelper from "../../shared/helpers/s3Upload.js"; // ✅ Added import for AWS logic
 
 const registerUser = asyncHandler(async (req, res) => {
-    const { userName, userEmail, userPassword, userRole, phoneNumber, userAddress } = req.body;
+    const { userName, userEmail, userPassword, userRole, phoneNumber} = req.body;
     const existingUser = await User.findOne({ userEmail });
     if (existingUser) {
         throw new ApiError(400, "User already exists");
